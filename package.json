@@ -1,0 +1,25 @@
+{
+  "name": "rpp2205-chelsea-questionsandanswers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rpp2205-sdc-mojave/rpp2205-Chelsea-QuestionsAndAnswers.git"
+  },
+  "author": "Chelsea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rpp2205-sdc-mojave/rpp2205-Chelsea-QuestionsAndAnswers/issues"
+  },
+  "homepage": "https://github.com/rpp2205-sdc-mojave/rpp2205-Chelsea-QuestionsAndAnswers#readme",
+  "devDependencies": {
+    "jest": "^29.3.0"
+  }
+}
