@@ -18,9 +18,9 @@ app.get('/', (req, res) => {
 // get questions
 app.get('/qa/questions', getQuestions)
 
-// // get answers
-// app.get('/qa/questions/:question_id/answers', (req, res) => {
-// });
+// get answers
+app.get('/qa/questions/:question_id/answers', (req, res) => {
+});
 
 // // post question
 // app.post('/qa/questions', (req, res) => {

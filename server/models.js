@@ -6,6 +6,7 @@ const readQuestions = (page, count) => {
   return pool
   .query(query)
   .then((results) => {
+    //console.log('results in models', results)
     return results.rows
   })
   .catch(err => console.log('Models: error with getting all questions', err))

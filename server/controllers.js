@@ -8,7 +8,7 @@ const getQuestions = (req, res) => {
 
   readQuestions(page, count)
     .then((results) => {
-      console.log('results from controllers readQuestions', results)
+      //console.log('results from controllers readQuestions', results)
       res.send(results)
     })
     .catch(err => console.log('readQuestions Error!', err))
