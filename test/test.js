@@ -12,6 +12,14 @@ describe('All questions', (done) => {
   })
 })
 
+describe('All answers', (done) => {
+  test('It should return 200 for product ID 71717 answers GET request', async () => {
+    moxios.stubRequest(`http://localhost:${process.env.PORT}/qa/questions/71717/answers`, {
+      status: 200
+    })
+  })
+})
+
 // function sum(a, b) {
 //   return a + b;
 // }

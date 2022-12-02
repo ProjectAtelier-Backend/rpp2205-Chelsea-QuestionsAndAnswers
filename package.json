@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "directories": {
-    "test": "test --coverage"
+    "test": "test"
   },
   "scripts": {
-    "test": "jest",
+    "test-qa": "jest --coverage",
     "server-dev": "npx nodemon --watch server server/index.js"
   },
   "repository": {
