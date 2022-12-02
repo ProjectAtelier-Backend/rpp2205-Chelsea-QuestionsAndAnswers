@@ -38,17 +38,18 @@ const getAnswers = (req, res) => {
 }
 
 const postQuestion = (req, res) => {
-  console.log('POST A QUESTION HERE!!', req)
-  var product_id = req.params.product_id || 1;
-  var body = req.body.body
-  var asker_name = req.body.name
-  var asker_email = req.body.email
+  console.log('POST A QUESTION HERE!!', req.query)
+  var product_id = req.query.product_id || 1;
+  var body = req.query.body
+  var asker_name = req.query.asker_name
+  var asker_email = req.query.asker_email
   var reported = 0;
   var helpful = 0;
-  var date_written = new Date(Date.now()).toISOString()
+  var date_written = Date.now()
 
   addQuestion(product_id, body, asker_name, asker_email, reported, helpful, date_written)
     .then((results) => {
+      console.log('date writtennnn', date_written)
       console.log('results from controllers addQuestion', results)
       res.send(results)
     })
