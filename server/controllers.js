@@ -1,5 +1,5 @@
 
-const { readQuestions, readAnswers, addQuestion } = require('./models.js');
+const { readQuestions, readAnswers, addQuestion, addAnswer } = require('./models.js');
 
 const getQuestions = (req, res) => {
   //console.log('HERE!!', req)
@@ -32,13 +32,13 @@ const getAnswers = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Controllers readAnswers Error.", err
+        message: "Controllers readAnswers ERR", err
       });
     });
 }
 
 const postQuestion = (req, res) => {
-  console.log('POST A QUESTION HERE!!', req.query)
+  //console.log('POST A QUESTION HERE!!', req.query)
   var product_id = req.query.product_id || 1;
   var body = req.query.body
   var asker_name = req.query.asker_name
@@ -49,13 +49,36 @@ const postQuestion = (req, res) => {
 
   addQuestion(product_id, body, asker_name, asker_email, reported, helpful, date_written)
     .then((results) => {
-      console.log('date writtennnn', date_written)
-      console.log('results from controllers addQuestion', results)
+      // console.log('date writtennnn', date_written)
+      // console.log('results from controllers addQuestion', results)
       res.send(results)
     })
     .catch(err => {
       res.status(500).send({
-        message: "Controllers addQuestion Error.", err
+        message: "Controllers addQuestion ERR", err
+      });
+    });
+}
+
+const postAnswer = (req, res) => {
+  console.log('POST AN ANSWER HERE!!', req.query)
+  var question_id = req.params.question_id || 1;
+  var body = req.query.body
+  var answerer_name = req.query.answerer_name
+  var answerer_email = req.query.answerer_email
+  var reported = 0;
+  var helpful = 0;
+  var date_written = Date.now()
+
+  addAnswer(question_id, body, answerer_name, answerer_email, reported, helpful, date_written)
+    .then((results) => {
+      console.log('date writtennnn', date_written)
+      console.log('results from controllers postAnswer', results)
+      res.send(results)
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Controllers postAnswer ERR", err
       });
     });
 }
@@ -63,5 +86,6 @@ const postQuestion = (req, res) => {
 module.exports = {
   getQuestions,
   getAnswers,
-  postQuestion
+  postQuestion,
+  postAnswer
 }

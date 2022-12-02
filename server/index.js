@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require("body-parser");
 const app = express();
 const port = 8080;
-const { getQuestions, getAnswers, postQuestion } = require('./controllers.js');
+const { getQuestions, getAnswers, postQuestion, postAnswer } = require('./controllers.js');
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -16,17 +16,16 @@ app.get('/', (req, res) => {
 })
 
 // get questions
-app.get('/qa/questions/:question_id', getQuestions)
+app.get('/qa/questions/:question_id', getQuestions);
 
 // get answers
 app.get('/qa/questions/:question_id/answers', getAnswers);
 
 // post question
-app.post('/qa/questions', postQuestion)
+app.post('/qa/questions', postQuestion);
 
-// // post answer
-// app.post('/qa/questions/:question_id/answers', (req, res) => {
-// })
+// post answer
+app.post('/qa/questions/:question_id/answers', postAnswer);
 
 // // put question as helpful
 // app.put('/qa/questions/:question_id/helpful', (req, res) => {

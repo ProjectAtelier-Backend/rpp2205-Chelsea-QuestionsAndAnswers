@@ -36,8 +36,22 @@ const addQuestion = (product_id, body, asker_name, asker_email, reported, helpfu
   .catch(err => console.log('Models: ERR with posting question', err))
 }
 
+const addAnswer = (question_id, body, answerer_name, answerer_email, reported, helpful, date_written) => {
+  var query = `INSERT INTO answers (body, answerer_name, answerer_email, reported, helpful, date_written) VALUES (${body}, ${answerer_name}, ${answerer_email}, ${reported}, ${helpful}, ${date_written}) WHERE question_id = ${question_id}`;
+  //var query2 = `INSERT INTO answers_photos ()`
+
+  return pool
+  .query(query)
+  .then((results) => {
+    console.log('posting answer results in models', results)
+    return results.rows
+  })
+  .catch(err => console.log('Models: ERR with posting answer', err))
+}
+
 module.exports = {
   readQuestions,
   readAnswers,
-  addQuestion
+  addQuestion,
+  addAnswer
 }
