@@ -1,5 +1,5 @@
 
-const { readQuestions, readAnswers, addQuestion, addAnswer } = require('./models.js');
+const { readQuestions, readAnswers, addQuestion, addAnswer, helpQuestion } = require('./models.js');
 
 const getQuestions = (req, res) => {
   //console.log('HERE!!', req)
@@ -83,9 +83,26 @@ const postAnswer = (req, res) => {
     });
 }
 
+const helpfulQuestion = (req, res) => {
+  console.log('HERE!!', req)
+  var id = req.params.question_id;
+
+  helpQuestion(id)
+    .then((results) => {
+      //console.log('results from controllers helpfulQuestion', results)
+      res.send(results)
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Controllers helpfulQuestion ERR", err
+      });
+    });
+}
+
 module.exports = {
   getQuestions,
   getAnswers,
   postQuestion,
-  postAnswer
+  postAnswer,
+  helpfulQuestion
 }

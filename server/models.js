@@ -13,7 +13,7 @@ const readQuestions = (product_id, page, count) => {
 }
 
 const readAnswers = (question_id, page, count) => {
-  var query = `SELECT * FROM answers WHERE question_id = ${question_id} LIMIT ${count} OFFSET ${(page - 1) * count}`;
+  var query = `SELECT * FROM answers WHERE id = ${question_id} LIMIT ${count} OFFSET ${(page - 1) * count}`;
 
   return pool
   .query(query)
@@ -48,9 +48,22 @@ const addAnswer = (question_id, body, answerer_name, answerer_email, reported, h
   .catch(err => console.log('Models: ERR with posting answer', err))
 }
 
+const helpQuestion = (id) => {
+  var query = `UPDATE questions SET helpful = helpful + 1 WHERE id = ${id}`;
+
+  return pool
+  .query(query)
+  .then((results) => {
+    console.log('results in models', results)
+    return results.rows
+  })
+  .catch(err => console.log('Models: ERR with adding helpful to questions', err))
+}
+
 module.exports = {
   readQuestions,
   readAnswers,
   addQuestion,
-  addAnswer
+  addAnswer,
+  helpQuestion
 }
