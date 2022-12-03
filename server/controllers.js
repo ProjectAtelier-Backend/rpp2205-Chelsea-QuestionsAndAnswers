@@ -1,5 +1,5 @@
 
-const { readQuestions, readAnswers, addQuestion, addAnswer, helpQuestion } = require('./models.js');
+const { readQuestions, readAnswers, addQuestion, addAnswer, helpQuestion, helpAnswer, reportedQuestion, reportedAnswer } = require('./models.js');
 
 const getQuestions = (req, res) => {
   //console.log('HERE!!', req)
@@ -84,7 +84,7 @@ const postAnswer = (req, res) => {
 }
 
 const helpfulQuestion = (req, res) => {
-  console.log('HERE!!', req)
+  //console.log('HERE!!', req)
   var id = req.params.question_id;
 
   helpQuestion(id)
@@ -99,10 +99,62 @@ const helpfulQuestion = (req, res) => {
     });
 }
 
+const helpfulAnswer = (req, res) => {
+  //console.log('HERE!!', req)
+  var id = req.params.answer_id;
+
+  helpAnswer(id)
+    .then((results) => {
+      console.log('results from controllers helpfulAnswer', results)
+      res.send(results)
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Controllers helpfulAnswer ERR", err
+      });
+    });
+}
+
+
+const reportQuestion = (req, res) => {
+  //console.log('HERE!!', req)
+  var id = req.params.question_id;
+
+  reportedQuestion(id)
+    .then((results) => {
+      console.log('results from controllers reportQuestion', results)
+      res.send(results)
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Controllers reportQuestion ERR", err
+      });
+    });
+}
+
+const reportAnswer = (req, res) => {
+  console.log('HERE!!', req)
+  var id = req.params.answer_id;
+
+  reportedAnswer(id)
+    .then((results) => {
+      console.log('results from controllers reportAnswer', results)
+      res.send(results)
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Controllers reportAnswer ERR", err
+      });
+    });
+}
+
 module.exports = {
   getQuestions,
   getAnswers,
   postQuestion,
   postAnswer,
-  helpfulQuestion
+  helpfulQuestion,
+  helpfulAnswer,
+  reportQuestion,
+  reportAnswer
 }

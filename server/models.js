@@ -60,10 +60,51 @@ const helpQuestion = (id) => {
   .catch(err => console.log('Models: ERR with adding helpful to questions', err))
 }
 
+const helpAnswer = (id) => {
+  var query = `UPDATE answers SET helpful = helpful + 1 WHERE id = ${id}`;
+
+  return pool
+  .query(query)
+  .then((results) => {
+    console.log('results in models', results)
+    return results.rows
+  })
+  .catch(err => console.log('Models: ERR with adding helpful to answers', err))
+}
+
+
+const reportedQuestion = (id) => {
+  var query = `UPDATE questions SET reported = 1 WHERE id = ${id}`;
+
+  return pool
+  .query(query)
+  .then((results) => {
+    console.log('results in models', results)
+    return results.rows
+  })
+  .catch(err => console.log('Models: ERR with reporting question', err))
+}
+
+
+const reportedAnswer = (id) => {
+  var query = `UPDATE answers SET reported = 1 WHERE id = ${id}`;
+
+  return pool
+  .query(query)
+  .then((results) => {
+    console.log('results in models', results)
+    return results.rows
+  })
+  .catch(err => console.log('Models: ERR with reporting answer', err))
+}
+
 module.exports = {
   readQuestions,
   readAnswers,
   addQuestion,
   addAnswer,
-  helpQuestion
+  helpQuestion,
+  helpAnswer,
+  reportedQuestion,
+  reportedAnswer
 }
