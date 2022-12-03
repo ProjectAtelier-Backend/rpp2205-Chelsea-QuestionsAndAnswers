@@ -37,9 +37,8 @@ const addQuestion = (product_id, body, asker_name, asker_email, reported, helpfu
 }
 
 const addAnswer = (question_id, body, answerer_name, answerer_email, reported, helpful, date_written) => {
-  var query = `INSERT INTO answers (body, answerer_name, answerer_email, reported, helpful, date_written) VALUES (${body}, ${answerer_name}, ${answerer_email}, ${reported}, ${helpful}, ${date_written}) WHERE question_id = ${question_id}`;
-  //var query2 = `INSERT INTO answers_photos ()`
-
+  var query = `INSERT INTO answers (body, date_written, answerer_name, answerer_email, reported, helpful) SELECT (${body}, ${date_written}, ${answerer_name}, ${answerer_email}, ${reported}, ${helpful}) WHERE question_id = ${question_id}`;
+  //var query = `INSERT INTO answers_photos (answer_id, url) VALUES `
   return pool
   .query(query)
   .then((results) => {
