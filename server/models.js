@@ -47,24 +47,6 @@ const readQuestions = (product_id, page, count) => {
 
 const readAnswers = (question_id, page, count) => {
   //var query = `SELECT * FROM answers WHERE id = ${question_id} LIMIT ${count} OFFSET ${(page - 1) * count}`;
-  //selects URLs & adds them into an array and places them into the right answers_ID (answers_photos)
-  // var query = `SELECT
-  // answer_id,
-  // body,
-  // date,
-  // answerer_name,
-  // helpfulness,
-  // (SELECT
-  //   COALESCE(json_agg(photo_list), '[]')
-  // FROM
-  //   (SELECT
-  //     photos.photo_id AS id,
-  //     photos.url
-  //   FROM photos
-  //   WHERE photos.answer_id = answers.answer_id) AS photo_list
-  // ) AS photos
-  // FROM answers WHERE question_id = ${question_id}
-  // LIMIT ${answers.count} OFFSET ${(page - 1) * count}`;
 
   var query = `SELECT
     id,
@@ -84,30 +66,6 @@ const readAnswers = (question_id, page, count) => {
     ) AS photos
   FROM answers WHERE question_id = ${question_id}
   LIMIT ${count} OFFSET ${(page - 1) * count}`;
-
-
-  // var query = `SELECT
-  //       a.question_id AS id,
-  //       a.body,
-  //       a.date_written AS date,
-  //       a.answerer_name,
-  //       a.helpful AS helpfulness,
-  //       a.reported,
-  //       ( SELECT COALESCE(json_agg(eachPhoto), '[]')
-  //         FROM (
-  //           SELECT
-  //           p.id,
-  //           p.url
-  //           FROM answers_photos p
-  //           WHERE p.answer_id = a.id
-  //         ) eachPhoto
-  //       ) AS photos
-  //       FROM answers a
-  //       WHERE a.question_id = q.id
-  //     ) eachAnswer
-  //   ) AS answers
-  //   FROM answers WHERE question_id = ${question_id}
-  //   LIMIT ${count} OFFSET ${(page - 1) * count}`;
 
   return pool.query(query)
   .then((result) => {
