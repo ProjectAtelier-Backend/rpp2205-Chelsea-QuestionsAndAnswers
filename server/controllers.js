@@ -1,5 +1,5 @@
 
-const { readQuestions, readAnswers, addQuestion, addAnswer, helpQuestion, helpAnswer, reportedQuestion, reportedAnswer, addAnswerWithPhoto } = require('./models.js');
+const { readQuestions, readAnswers, addQuestion, addAnswer, helpQuestion, helpAnswer, reportedQuestion, reportedAnswer, addAnswerWithPhotos } = require('./models.js');
 
 const getQuestions = (req, res) => {
   //console.log('HERE!!', req)
@@ -61,40 +61,28 @@ const postQuestion = (req, res) => {
 }
 
 const postAnswer = (req, res) => {
-  console.log('POST AN ANSWER HERE!!', req)
-  var question_id = req.params.question_id || 1;
-  var body = req.query.body
-  var answerer_name = req.query.answerer_name
-  var answerer_email = req.query.answerer_email
-  var reported = 0;
-  var helpful = 0;
-  var date_written = Date.now()
-  var photos = req.query.url;
+    console.log('POST AN ANSWER HERE!!', req)
+    var question_id = req.params.question_id;
+    var body = req.query.body
+    var answerer_name = req.query.answerer_name
+    var answerer_email = req.query.answerer_email
+    var reported = 0;
+    var helpful = 0;
+    var date_written = Date.now()
+    var photos = req.body.photos;
+    const answer = [question_id, body, date_written, answerer_name, answerer_email];
 
-  if (photos.length === 0) {
-    addAnswer(question_id, body, answerer_name, answerer_email, reported, helpful, date_written)
-      .then((results) => {
-        console.log('results from controllers postAnswer', results)
-        res.send(results)
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Controllers postAnswer ERR", err
-        });
-      });
+    //console.log('answer,', answer, 'PHOTOS', photos);
+      if (photos === undefined || photos === []) {
+        return addAnswer(answer)
+          .then(() => res.status(201).send('Add answer'))
+          .catch(err => res.status(400).send(err));
+      } else {
+        return addAnswerWithPhotos(answer, photos)
+          .then(() => res.status(201).send('Add answer WITH photos'))
+          .catch(err => res.status(400).send(err));
+      }
   }
-    addAnswerWithPhoto(question_id, body, answerer_name, answerer_email, reported, helpful, date_written, answer_id, photos)
-      .then((results) => {
-        console.log('PHOTOS', photos)
-        console.log('results from controllers postAnswer WITH photos', results)
-        res.send(results)
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Controllers postAnswer WITH photos ERR", err
-        });
-      });
-}
 
 const helpfulQuestion = (req, res) => {
   //console.log('HERE!!', req)

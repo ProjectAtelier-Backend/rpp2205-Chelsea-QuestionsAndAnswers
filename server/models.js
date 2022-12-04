@@ -46,8 +46,6 @@ const readQuestions = (product_id, page, count) => {
 }
 
 const readAnswers = (question_id, page, count) => {
-  //var query = `SELECT * FROM answers WHERE id = ${question_id} LIMIT ${count} OFFSET ${(page - 1) * count}`;
-
   var query = `SELECT
     id,
     body,
@@ -88,32 +86,30 @@ const addQuestion = (product_id, body, asker_name, asker_email, reported, helpfu
   .catch(err => console.log('Models: ERR with posting question', err))
 }
 
-const addAnswer = (question_id, body, answerer_name, answerer_email, reported, helpful, date_written) => {
-  var query = `INSERT INTO answers (question_id, body, date_written, answerer_name, answerer_email, reported, helpful)
-  VALUES (${question_id}, ${body}, ${date_written}, ${answerer_name}, ${answerer_email}, ${reported}, ${helpful})`;
-
-  return pool
-  .query(query)
-  .then((results) => {
-    console.log('posting answer results in models', results)
-    return results.rows
-  })
-  .catch(err => console.log('Models: ERR with posting answer', err))
+const addAnswer = (answer) => {
+  return pool.query(`INSERT INTO answers VALUES(nextval('answers_id_seq'), $1, $2, $3, $4, $5)`, answer)
+    .catch(err => {
+      console.error('add answer: ', err)
+      throw err;
+    });
 }
 
-
-const addAnswerWithPhoto = (question_id, body, answerer_name, answerer_email, reported, helpful, date_written) => {
-  var query = `INSERT INTO answers (question_id, body, date_written, answerer_name, answerer_email, reported, helpful)
-  VALUES (${question_id}, ${body}, ${date_written}, ${answerer_name}, ${answerer_email}, ${reported}, ${helpful})
-  INSERT INTO answers_photos (answer_id, url) VALUES (${answer_id}, ${url})`;
-
-  return pool
-  .query(query)
-  .then((results) => {
-    console.log('posting answer WITH photos results in models', results)
-    return results.rows
-  })
-  .catch(err => console.log('Models: ERR with posting answer WITH photos', err))
+const addAnswerWithPhotos = (answer, photos) => {
+  return pool.query(`INSERT INTO answers VALUES(nextval('answers_id_seq'), $1, $2, $3, $4, $5) returning answer_id`, answer)
+    .then((result) => {
+      let id = result.rows[0].answer_id;
+      return Promise.all(photos.map(photo => {
+        return pool.query(`INSERT INTO answers_photos VALUES(nextval('answers_photos_id_seq'), '${photo}', ${id})`)
+      }))
+      .catch(err => {
+        console.error('promise: ', err)
+        throw err;
+      });
+    })
+    .catch(err => {
+      console.error('add answer with photo: ', err)
+      throw err;
+    });
 }
 
 const helpQuestion = (id) => {
@@ -171,7 +167,7 @@ module.exports = {
   readAnswers,
   addQuestion,
   addAnswer,
-  addAnswerWithPhoto,
+  addAnswerWithPhotos,
   helpQuestion,
   helpAnswer,
   reportedQuestion,
