@@ -39,7 +39,7 @@ const readQuestions = (product_id, page, count) => {
 
   return pool.query(query)
   .then((results) => {
-    console.log('results in models', results)
+    //console.log('results in models', results)
     return results.rows
   })
   .catch(err => console.log('Models: ERR with getting all questions', err))
@@ -80,7 +80,7 @@ const addQuestion = (product_id, body, asker_name, asker_email, reported, helpfu
   return pool
   .query(query)
   .then((results) => {
-    console.log('posting question results in models', results)
+    //console.log('posting question results in models', results)
     return results.rows
   })
   .catch(err => console.log('Models: ERR with posting question', err))
