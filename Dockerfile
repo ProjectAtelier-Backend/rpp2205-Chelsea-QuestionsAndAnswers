@@ -1,6 +1,6 @@
 FROM --platform=linux/amd64 node:18-alpine
 
-RUN npm install --global nodemon
+RUN npm install
 
 WORKDIR /rpp2205-Chelsea-QuestionsAndAnswers
 
@@ -12,4 +12,4 @@ RUN npm install
 
 COPY . /rpp2205-Chelsea-QuestionsAndAnswers
 
-CMD ["npm", "start"]
+CMD ["node", "server/index.js"]
