@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require("body-parser");
 const app = express();
-const port = 3000;
+const port = 8000;
 const { getQuestions, getAnswers, postQuestion, postAnswer, helpfulQuestion, helpfulAnswer, reportQuestion, reportAnswer } = require('./controllers.js');
 
 // parse requests of content-type - application/json
@@ -11,8 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/loaderio-4abef43be7702dc533d42d7b21baf952', (req, res) => {
-  res.sendFile('loaderio-4abef43be7702dc533d42d7b21baf952', {root:__dirname});
+app.get('/loaderio-46aea5e19562468579e21ee9d66b71ff', (req, res) => {
+  res.sendFile('loaderio-46aea5e19562468579e21ee9d66b71ff', {root:__dirname});
 })
 
 app.get('/', (req, res) => {
