@@ -1,6 +1,6 @@
 require("dotenv").config();
-
-const Pool = require('pg').Pool
+const { Pool } = require('pg');
+//const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'postgres',
   host: process.env.HOST,
