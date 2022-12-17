@@ -11,6 +11,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.get('/loaderio-4abef43be7702dc533d42d7b21baf952', (req, res) => {
+  res.sendFile('loaderio-4abef43be7702dc533d42d7b21baf952', {root:__dirname});
+})
+
 app.get('/', (req, res) => {
   res.status(200).send('Hello World!');
 })
