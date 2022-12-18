@@ -23,5 +23,5 @@ export default function () {
   //PUT answer helpful
   //http.put(`http://localhost:8080/qa/answers/${random}/helpful`)
   //PUT answer report
-  http.put(`http://localhost:8080/qa/questions/${random}/report`)
+  //http.put(`http://localhost:8080/qa/answers/${random}/report`)
 }
