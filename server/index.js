@@ -11,8 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/loaderio-11b4516511723230a64a51c122dfe5a2', (req, res) => {
-  res.send('loaderio-11b4516511723230a64a51c122dfe5a2');
+app.get('/loaderio-94e4bf78b10710b8b1f2253ff905f775', (req, res) => {
+  res.send('loaderio-94e4bf78b10710b8b1f2253ff905f775');
 })
 
 app.get('/', (req, res) => {
