@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require("body-parser");
 const app = express();
-const port = 8000;
+const port = 8001;
 const { getQuestions, getAnswers, postQuestion, postAnswer, helpfulQuestion, helpfulAnswer, reportQuestion, reportAnswer } = require('./controllers.js');
 
 // parse requests of content-type - application/json
